@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: election-monitoring-backend
+    runtime: node
+    rootDir: .
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start --workspace server
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: CLIENT_ORIGIN
+        value: https://web-ten-ochre-45.vercel.app
+      - key: OCR_PROVIDER
+        value: mock
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASS
+        value: password123

@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "Election Field Agent",
+    "slug": "election-field-agent",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "assetBundlePatterns": ["**/*"]
+  }
+}
