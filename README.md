@@ -78,6 +78,29 @@ The server exposes a pluggable OCR service:
   - `OCR_PROVIDER=anthropic`
   - `ANTHROPIC_API_KEY=...`
 
+## Deploy backend on Render
+
+The repo includes [`render.yaml`](render.yaml) (Render Blueprint) for the API.
+
+1. Open [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint**.
+2. Connect GitHub and select repo **`justappsandproject/elecmonit`** (branch `main`).
+3. Apply the blueprint. Render will create a **Web Service** named `election-monitoring-backend`.
+4. When the deploy finishes, copy the service URL (for example `https://election-monitoring-backend.onrender.com`).
+5. **Wire the admin portal (Vercel):** in the Vercel project → **Settings** → **Environment Variables** set:
+   - `VITE_API_URL` = your Render URL (no trailing slash)
+6. Redeploy the Vercel site (or trigger a new deployment).
+
+**Render environment variables** (adjust in the service **Environment** tab):
+
+| Variable | Purpose |
+|----------|---------|
+| `CLIENT_ORIGIN` | Comma-separated allowed browser origins (your Vercel URL + `http://localhost:5173` for local dev). |
+| `OCR_PROVIDER` | `mock` (default) or `anthropic` for real OCR. |
+| `ANTHROPIC_API_KEY` | Required if `OCR_PROVIDER=anthropic`. |
+| `ADMIN_USER` / `ADMIN_PASS` | Portal login (change from defaults in production). |
+
+Health check: `GET /health`
+
 ## Next production upgrades
 
 - Real file uploads to Cloudinary or S3
@@ -85,5 +108,3 @@ The server exposes a pluggable OCR service:
 - Immutable append-only audit log
 - GPS capture + offline sync queue in mobile app
 - Supervisor verification workflow
-# elecmonit
-# elecmonit

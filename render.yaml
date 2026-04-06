@@ -1,19 +1,26 @@
+# Deploy: Render Dashboard → New → Blueprint → connect repo justappsandproject/elecmonit
+# After deploy, set Vercel env VITE_API_URL to your Render URL (https://<service>.onrender.com)
+
 services:
   - type: web
     name: election-monitoring-backend
     runtime: node
+    region: oregon
     rootDir: .
     plan: free
     buildCommand: npm install
     startCommand: npm run start --workspace server
+    healthCheckPath: /health
     envVars:
-      - key: PORT
-        value: 10000
+      # Comma-separated: your Vercel admin URL + local dev (edit in Render if URLs change)
       - key: CLIENT_ORIGIN
-        value: https://web-ten-ochre-45.vercel.app
+        value: https://web-ten-ochre-45.vercel.app,http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174
       - key: OCR_PROVIDER
         value: mock
       - key: ADMIN_USER
         value: admin
       - key: ADMIN_PASS
         value: password123
+      # Optional: set in Render dashboard for real Claude OCR
+      - key: ANTHROPIC_API_KEY
+        sync: false
